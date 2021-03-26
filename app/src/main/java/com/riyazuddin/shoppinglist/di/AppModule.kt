@@ -1,11 +1,15 @@
 package com.riyazuddin.shoppinglist.di
 
 import android.content.Context
+import androidx.room.PrimaryKey
 import androidx.room.Room
+import com.riyazuddin.shoppinglist.data.local.ShoppingDao
 import com.riyazuddin.shoppinglist.data.local.ShoppingDatabase
 import com.riyazuddin.shoppinglist.data.remote.PixabayApi
 import com.riyazuddin.shoppinglist.others.Constants.DATABASE_NAME
 import com.riyazuddin.shoppinglist.others.Constants.PIXABAY_BASE_URL
+import com.riyazuddin.shoppinglist.repositories.ShoppingRepository
+import com.riyazuddin.shoppinglist.repositories.ShoppingRepositoryImplementation
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,7 +21,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)
-object Module {
+object AppModule {
 
     @Provides
     @Singleton
@@ -30,6 +34,13 @@ object Module {
     fun provideShoppingDao(
         database: ShoppingDatabase
     ) = database.shoppingDao()
+
+    @Provides
+    @Singleton
+    fun provideShoppingRepository(
+        dao: ShoppingDao,
+        pixabayApi: PixabayApi
+    ) = ShoppingRepositoryImplementation(dao, pixabayApi) as ShoppingRepository
 
     @Provides
     @Singleton

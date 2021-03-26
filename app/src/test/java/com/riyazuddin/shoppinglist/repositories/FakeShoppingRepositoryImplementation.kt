@@ -34,7 +34,7 @@ class FakeShoppingRepositoryImplementation: ShoppingRepository {
     }
 
     override fun observeAllShoppingItems(): LiveData<List<ShoppingItem>> {
-        return observeAllShoppingItems()
+        return observeAllShoppingItem
     }
 
     override fun observeTotalPrice(): LiveData<Float> {
